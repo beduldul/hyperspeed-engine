@@ -103,7 +103,7 @@ public class HyperSpeedCommands {
         source.sendSuccess(() -> Component.literal("§6=== 📍 Registered Auto-Pregen Hotspots ==="), false);
         for (HotspotTracker.Hotspot h : list) {
             source.sendSuccess(() -> Component.literal(String.format("§a• §f%s §7[%s] §e(Chunk: %d, %d | Radius: %d chunks = %d blocks)",
-                h.name, h.dimension.location().getPath(), h.chunkX, h.chunkZ, h.radius, h.radius * 16)), false);
+                h.name, h.dimension.location().getPath(), h.chunkX, h.chunkZ, h.getRadius(), h.getRadius() * 16)), false);
         }
         source.sendSuccess(() -> Component.literal("§6==========================================="), false);
         return 1;
