@@ -29,7 +29,8 @@ public class HyperSpeedMod {
         instance = this;
 
         LOGGER.info("==================================================");
-        LOGGER.info("[HyperSpeed Ultra] Initializing v2.0.0 Apex Edition for NeoForge 1.21.1");
+        LOGGER.info("[HyperSpeed Ultra] Initializing v2.1.0 Turbo Apex for NeoForge 1.21.1");
+        LOGGER.info("[HyperSpeed Ultra] Turbo Throughput Pregen: UP TO 200 CHUNKS/SEC");
         LOGGER.info("[HyperSpeed Ultra] Real-Time Lookahead Vector Streamer: ACTIVE");
         LOGGER.info("[HyperSpeed Ultra] 10k x 10k Multi-Dimension Auto-Pregen: ACTIVE");
         LOGGER.info("[HyperSpeed Ultra] Anti-Ghost-Block & Cobweb Auto-Resync: ACTIVE");

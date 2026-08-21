@@ -15,8 +15,7 @@ public class IdleAutoPregen {
     private final HotspotTracker hotspotTracker = new HotspotTracker();
     
     private boolean isRunning = false;
-    private int idleCooldownTicks = 200; // 10 seconds after 0 players
-    private int tickCounter = 0;
+    private int idleCooldownTicks = 100; // 5 seconds after 0 players
     
     // Multi-Dimension Spiral State
     private int currentHotspotIndex = 0;
@@ -27,6 +26,10 @@ public class IdleAutoPregen {
     
     private int chunksGeneratedTotal = 0;
     private int chunksGeneratedThisSession = 0;
+
+    // Turbo Throughput Configuration
+    private int batchSize = 10; // 10 chunks per tick = ~200 chunks/second (Turbo Mode)
+    private int progressReportThreshold = 500;
 
     public HotspotTracker getHotspotTracker() {
         return hotspotTracker;
@@ -58,7 +61,7 @@ public class IdleAutoPregen {
         if (isRunning) {
             pause("Player " + event.getEntity().getName().getString() + " connected");
         }
-        idleCooldownTicks = 200;
+        idleCooldownTicks = 100;
     }
 
     @SubscribeEvent
@@ -70,7 +73,7 @@ public class IdleAutoPregen {
                 serverPlayer.blockPosition()
             );
         }
-        idleCooldownTicks = 200;
+        idleCooldownTicks = 100;
     }
 
     @SubscribeEvent
@@ -82,7 +85,7 @@ public class IdleAutoPregen {
 
         int playerCount = server.getPlayerList().getPlayerCount();
 
-        // 1. If players are online, pause immediately
+        // 1. If players are online, pause immediately (0ms delay)
         if (playerCount > 0) {
             if (isRunning) {
                 pause("Players online (" + playerCount + ")");
@@ -101,11 +104,17 @@ public class IdleAutoPregen {
             startIdlePregen();
         }
 
-        // 4. Tick step: Throttle to 1 chunk per 4 ticks (~5 chunks/sec)
-        tickCounter++;
-        if (tickCounter % 4 == 0) {
-            tickPregen(server);
+        // 4. Turbo Tick: Dispatch adaptive batch every tick
+        double mspt = server.getAverageTickTimeNanos() / 1_000_000.0;
+        if (mspt < 25.0) {
+            batchSize = 10; // Max Turbo: 200 chunks/sec
+        } else if (mspt < 40.0) {
+            batchSize = 5;  // Medium: 100 chunks/sec
+        } else {
+            batchSize = 2;  // Safe throttle: 40 chunks/sec
         }
+
+        tickTurboPregen(server, batchSize);
     }
 
     private void startIdlePregen() {
@@ -113,13 +122,13 @@ public class IdleAutoPregen {
         chunksGeneratedThisSession = 0;
         currentHotspotIndex = 0;
         resetSpiral();
-        HyperSpeedMod.LOGGER.info("[HyperSpeed Engine] 🌙 All players left. Multi-Dimension Auto-Pregeneration started in background.");
+        HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] ⚡ Turbo-Boost Auto-Pregeneration ACTIVATED (Up to 200 chunks/sec).");
     }
 
     public void pause(String reason) {
         if (isRunning) {
             isRunning = false;
-            HyperSpeedMod.LOGGER.info("[HyperSpeed Engine] ☀️ Instant Pause: {} (Session Chunks Pregenerated: {}). 100% server resources released.", reason, chunksGeneratedThisSession);
+            HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] ☀️ Instant Pause: {} (Session Chunks Pregenerated: {}). 100% resources released.", reason, chunksGeneratedThisSession);
         }
     }
 
@@ -130,12 +139,12 @@ public class IdleAutoPregen {
         spiralDz = -1;
     }
 
-    private void tickPregen(MinecraftServer server) {
+    private void tickTurboPregen(MinecraftServer server, int count) {
         if (!isRunning) return;
 
         List<HotspotTracker.Hotspot> spots = hotspotTracker.getHotspots();
         if (currentHotspotIndex >= spots.size()) {
-            HyperSpeedMod.LOGGER.info("[HyperSpeed Engine] ✅ All multi-dimension survival zones fully pre-rendered! Total chunks: {}", chunksGeneratedTotal);
+            HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] 🏆 All multi-dimension frontier regions fully pre-rendered! Total chunks: {}", chunksGeneratedTotal);
             pause("All priority regions completed");
             return;
         }
@@ -148,33 +157,35 @@ public class IdleAutoPregen {
             return;
         }
 
-        // Calculate chunk coordinate using spiral
-        int targetChunkX = spot.chunkX + spiralX;
-        int targetChunkZ = spot.chunkZ + spiralZ;
+        for (int i = 0; i < count; i++) {
+            if (!isRunning || currentHotspotIndex >= spots.size()) break;
 
-        // Asynchronously request full chunk generation
-        level.getChunkSource().getChunkFuture(targetChunkX, targetChunkZ, ChunkStatus.FULL, true)
-            .whenComplete((result, throwable) -> {
-                if (throwable == null && result != null) {
-                    chunksGeneratedTotal++;
-                    chunksGeneratedThisSession++;
-                }
-            });
+            int targetChunkX = spot.chunkX + spiralX;
+            int targetChunkZ = spot.chunkZ + spiralZ;
 
-        // Periodic maintenance every 150 chunks
-        if (chunksGeneratedThisSession > 0 && chunksGeneratedThisSession % 150 == 0) {
-            level.getChunkSource().save(false);
-            System.gc(); // Clean garbage memory safely during idle
-            HyperSpeedMod.LOGGER.info("[HyperSpeed Engine] 📦 Background Progress: {} chunks pre-rendered for [{}] in {}", chunksGeneratedThisSession, spot.name, spot.dimension.location().getPath());
+            // Non-blocking async full chunk request
+            level.getChunkSource().getChunkFuture(targetChunkX, targetChunkZ, ChunkStatus.FULL, true)
+                .whenComplete((result, throwable) -> {
+                    if (throwable == null && result != null) {
+                        chunksGeneratedTotal++;
+                        chunksGeneratedThisSession++;
+                    }
+                });
+
+            // Advance coordinates in spiral
+            advanceSpiral(spot.radius);
         }
 
-        // Advance spiral coordinates
-        advanceSpiral(spot.radius);
+        // Periodic maintenance every 500 chunks
+        if (chunksGeneratedThisSession > 0 && chunksGeneratedThisSession % progressReportThreshold < count) {
+            level.getChunkSource().save(false);
+            System.gc(); // Clean RAM safely during idle
+            HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] 🚀 TURBO PROGRESS: {} chunks pre-rendered for [{}] in {}", chunksGeneratedThisSession, spot.name, spot.dimension.location().getPath());
+        }
     }
 
     private void advanceSpiral(int maxRadius) {
         if (Math.abs(spiralX) > maxRadius || Math.abs(spiralZ) > maxRadius) {
-            // Next hotspot
             currentHotspotIndex++;
             resetSpiral();
             return;

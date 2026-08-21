@@ -1,18 +1,19 @@
 modLoader="javafml"
 loaderVersion="[4,)"
 license="MIT"
-issueTrackerURL="https://github.com"
+issueTrackerURL="https://github.com/beduldul/hyperspeed-engine"
 
 [[mods]]
 modId="hyperspeed"
-version="2.0.0"
-displayName="HyperSpeed Engine Ultra (Apex Edition)"
+version="2.1.0"
+displayName="HyperSpeed Engine Ultra (Turbo Apex)"
 description='''
-Ultra-Performance Optimization & Lookahead Chunk Streaming Engine for NeoForge 1.21.1.
-- Predictive Trajectory Lookahead Vector Streaming (0-lag high-speed travel across thousands of blocks).
+Ultra-Performance Optimization, Turbo Pregeneration & Predictive Lookahead Chunk Streaming Engine for NeoForge 1.21.1.
+- Turbo-Boost High-Throughput Auto-Pregeneration (Up to 200 chunks/sec).
+- Predictive Trajectory Lookahead Vector Streaming (0-lag high-speed travel).
 - Multi-Dimension 10k x 10k Frontier Auto-Pregeneration (Overworld + Nether + End).
-- Real-Time MSPT Adaptive Distance Guard.
-- 100% Survival Mob Farm, Spawner & Create Contraption Shield.
+- Anti-Ghost-Block & Cobweb Auto-Resync Guard.
+- Real-Time MSPT Adaptive Distance Guard & 100% Survival Farm Shield.
 '''
 authors="Antigravity DeepMind"
 
