@@ -5,11 +5,12 @@ issueTrackerURL="https://github.com/beduldul/hyperspeed-engine"
 
 [[mods]]
 modId="hyperspeed"
-version="2.2.0"
-displayName="HyperSpeed Engine Ultra (Infinite Frontier)"
+version="2.3.0"
+displayName="HyperSpeed Engine Ultra (Resumable Apex)"
 description='''
-Ultra-Performance Optimization, Infinite Frontier Pregeneration & Predictive Lookahead Chunk Streaming Engine for NeoForge 1.21.1.
-- Infinite Auto-Expanding Frontier (10,000+ blocks baseline with automatic infinite ring expansion).
+Ultra-Performance Optimization, Infinite Persistent Pregeneration & Predictive Lookahead Chunk Streaming Engine for NeoForge 1.21.1.
+- Smart Persistent Resume: Remembers exact chunk coordinate & frontier ring across server restarts and player disconnects.
+- Infinite Auto-Expanding Frontier: 10,000+ blocks baseline with automatic infinite ring expansion.
 - Turbo-Boost High-Throughput Auto-Pregeneration (Up to 200 chunks/sec).
 - Predictive Trajectory Lookahead Vector Streaming (0-lag high-speed travel).
 - Anti-Ghost-Block & Cobweb Auto-Resync Guard.

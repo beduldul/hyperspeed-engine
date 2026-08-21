@@ -29,7 +29,8 @@ public class HyperSpeedMod {
         instance = this;
 
         LOGGER.info("==================================================");
-        LOGGER.info("[HyperSpeed Ultra] Initializing v2.2.0 Infinite Frontier Edition for NeoForge 1.21.1");
+        LOGGER.info("[HyperSpeed Ultra] Initializing v2.3.0 Resumable Apex for NeoForge 1.21.1");
+        LOGGER.info("[HyperSpeed Ultra] Smart Persistent Progress State: ACTIVE (Resumes across restarts & player sessions)");
         LOGGER.info("[HyperSpeed Ultra] Infinite Auto-Expanding Frontiers: 10,000+ Blocks Baseline (Auto-Expanding)");
         LOGGER.info("[HyperSpeed Ultra] Turbo Throughput Pregen: UP TO 200 CHUNKS/SEC");
         LOGGER.info("[HyperSpeed Ultra] Real-Time Lookahead Vector Streamer: ACTIVE");
