@@ -83,16 +83,8 @@ public class IdleAutoPregen {
             saveState();
         }
         idleCooldownTicks = 100;
-
-        // INSTANT PURGE ON JOIN: Clean pregen heap cache immediately so player experiences pristine 1-5ms MSPT!
-        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-            ServerLevel level = serverPlayer.serverLevel();
-            if (level != null) {
-                level.getChunkSource().save(false);
-            }
-            System.gc();
-            HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] 🧹 Instant Memory Purge on Join: Cache cleared, 100% resources released to player!");
-        }
+        HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] ☀️ Player {} joined: Background pregen paused. 100% resources allocated to gameplay.",
+            event.getEntity().getName().getString());
     }
 
     @SubscribeEvent

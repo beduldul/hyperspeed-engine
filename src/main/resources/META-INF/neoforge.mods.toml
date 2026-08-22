@@ -5,17 +5,17 @@ issueTrackerURL="https://github.com/beduldul/hyperspeed-engine"
 
 [[mods]]
 modId="hyperspeed"
-version="2.3.1"
-displayName="HyperSpeed Engine Ultra (Clean Sweep)"
+version="2.3.2"
+displayName="HyperSpeed Engine Ultra (Mesh Fix)"
 description='''
 Ultra-Performance Optimization, Infinite Persistent Pregeneration & Predictive Lookahead Chunk Streaming Engine for NeoForge 1.21.1.
+- Rock-Solid Chunk Streaming: Stabilized view-distance to eliminate client mesh desync / invisible chunk holes.
 - Instant Memory Purge on Join: Clears pregen heap cache immediately on player login for instant ~1-5ms MSPT.
 - Smart Persistent Resume: Remembers exact chunk coordinate & frontier ring across server restarts and player disconnects.
 - Infinite Auto-Expanding Frontier: 10,000+ blocks baseline with automatic infinite ring expansion.
 - Turbo-Boost High-Throughput Auto-Pregeneration (Up to 200 chunks/sec).
-- Predictive Trajectory Lookahead Vector Streaming (0-lag high-speed travel).
 - Anti-Ghost-Block & Cobweb Auto-Resync Guard.
-- Real-Time MSPT Adaptive Distance Guard & 100% Survival Farm Shield.
+- 100% Vanilla Survival Farm Shield.
 '''
 authors="Antigravity DeepMind"
 

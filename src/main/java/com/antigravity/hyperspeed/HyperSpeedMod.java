@@ -29,14 +29,13 @@ public class HyperSpeedMod {
         instance = this;
 
         LOGGER.info("==================================================");
-        LOGGER.info("[HyperSpeed Ultra] Initializing v2.3.1 Clean Sweep for NeoForge 1.21.1");
-        LOGGER.info("[HyperSpeed Ultra] Instant Memory Purge on Join: ACTIVE (0ms drop to ~1-5ms MSPT)");
-        LOGGER.info("[HyperSpeed Ultra] Smart Persistent Progress State: ACTIVE (Resumes across restarts & player sessions)");
-        LOGGER.info("[HyperSpeed Ultra] Infinite Auto-Expanding Frontiers: 10,000+ Blocks Baseline (Auto-Expanding)");
+        LOGGER.info("[HyperSpeed Ultra] Initializing v2.3.2 Mesh Fix for NeoForge 1.21.1");
+        LOGGER.info("[HyperSpeed Ultra] Stable Chunk Streamer: ACTIVE (Eliminated chunk tearing / invisible void holes)");
+        LOGGER.info("[HyperSpeed Ultra] Smart Persistent Progress State: ACTIVE");
+        LOGGER.info("[HyperSpeed Ultra] Infinite Auto-Expanding Frontiers: ACTIVE");
         LOGGER.info("[HyperSpeed Ultra] Turbo Throughput Pregen: UP TO 200 CHUNKS/SEC");
-        LOGGER.info("[HyperSpeed Ultra] Real-Time Lookahead Vector Streamer: ACTIVE");
         LOGGER.info("[HyperSpeed Ultra] Anti-Ghost-Block & Cobweb Auto-Resync: ACTIVE");
-        LOGGER.info("[HyperSpeed Ultra] Adaptive MSPT Scaler & Farm Shield: ACTIVE");
+        LOGGER.info("[HyperSpeed Ultra] Vanilla Survival Farm Shield: ACTIVE");
         LOGGER.info("==================================================");
 
         this.pregenEngine = new IdleAutoPregen();

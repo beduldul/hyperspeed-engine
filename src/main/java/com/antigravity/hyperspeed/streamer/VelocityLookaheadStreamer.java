@@ -26,12 +26,15 @@ public class VelocityLookaheadStreamer {
         MinecraftServer server = event.getServer();
         if (server == null || !server.isRunning()) return;
 
+        int playerCount = server.getPlayerList().getPlayerCount();
+        if (playerCount == 0) return;
+
         tickCounter++;
-        // Run lookahead cone sweep every 8 ticks (0.4s) for high responsiveness
-        if (tickCounter % 8 != 0) return;
+        // Run lookahead cone sweep every 20 ticks (1.0s) smoothly
+        if (tickCounter % 20 != 0) return;
 
         // Clear cache if large
-        if (recentlyRequestedChunks.size() > 5000) {
+        if (recentlyRequestedChunks.size() > 2000) {
             recentlyRequestedChunks.clear();
         }
 
@@ -50,35 +53,26 @@ public class VelocityLookaheadStreamer {
         double dirX;
         double dirZ;
 
-        // If moving fast (sprinting, riding horse/boat, elytra, train)
-        if (speedSq > 0.005) {
+        // Only stream ahead if moving actively (sprinting, riding, elytra, boat)
+        if (speedSq > 0.01) {
             double len = Math.sqrt(speedSq);
             dirX = velocity.x / len;
             dirZ = velocity.z / len;
         } else {
-            // Use view direction vector
-            Vec3 look = player.getViewVector(1.0f);
-            double hLen = Math.sqrt(look.x * look.x + look.z * look.z);
-            if (hLen < 0.001) return;
-            dirX = look.x / hLen;
-            dirZ = look.z / hLen;
+            return; // If stationary or walking slowly, vanilla chunk sending handles it flawlessly
         }
-
-        // Perpendicular vector for cone width
-        double perpX = -dirZ;
-        double perpZ = dirX;
 
         int playerChunkX = player.blockPosition().getX() >> 4;
         int playerChunkZ = player.blockPosition().getZ() >> 4;
 
-        // Project forward lookahead cone: distance from 4 to 14 chunks ahead
-        int[] lookaheadDistances = {4, 6, 8, 10, 12, 14};
+        // Project forward lookahead: 3 to 8 chunks ahead along velocity vector
+        int[] lookaheadDistances = {3, 5, 7};
         int[] lateralOffsets = {-1, 0, 1};
 
         for (int dist : lookaheadDistances) {
             for (int lat : lateralOffsets) {
-                int targetChunkX = (int) Math.round(playerChunkX + (dirX * dist) + (perpX * lat));
-                int targetChunkZ = (int) Math.round(playerChunkZ + (dirZ * dist) + (perpZ * lat));
+                int targetChunkX = (int) Math.round(playerChunkX + (dirX * dist) - (dirZ * lat));
+                int targetChunkZ = (int) Math.round(playerChunkZ + (dirZ * dist) + (dirX * lat));
 
                 long chunkKey = (((long) targetChunkX) << 32) | (targetChunkZ & 0xFFFFFFFFL);
                 if (recentlyRequestedChunks.add(chunkKey)) {
