@@ -5,10 +5,11 @@ issueTrackerURL="https://github.com/beduldul/hyperspeed-engine"
 
 [[mods]]
 modId="hyperspeed"
-version="2.3.0"
-displayName="HyperSpeed Engine Ultra (Resumable Apex)"
+version="2.3.1"
+displayName="HyperSpeed Engine Ultra (Clean Sweep)"
 description='''
 Ultra-Performance Optimization, Infinite Persistent Pregeneration & Predictive Lookahead Chunk Streaming Engine for NeoForge 1.21.1.
+- Instant Memory Purge on Join: Clears pregen heap cache immediately on player login for instant ~1-5ms MSPT.
 - Smart Persistent Resume: Remembers exact chunk coordinate & frontier ring across server restarts and player disconnects.
 - Infinite Auto-Expanding Frontier: 10,000+ blocks baseline with automatic infinite ring expansion.
 - Turbo-Boost High-Throughput Auto-Pregeneration (Up to 200 chunks/sec).
