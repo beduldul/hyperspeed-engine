@@ -59,7 +59,7 @@ public class VelocityLookaheadStreamer {
             dirX = velocity.x / len;
             dirZ = velocity.z / len;
         } else {
-            return; // If stationary or walking slowly, vanilla chunk sending handles it flawlessly
+            return; // If stationary or walking slowly, vanilla chunk sending already covers it
         }
 
         int playerChunkX = player.blockPosition().getX() >> 4;

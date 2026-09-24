@@ -35,7 +35,7 @@ public class IdleAutoPregen {
     private int chunksGeneratedTotal = 0;
     private int chunksGeneratedThisSession = 0;
 
-    // Turbo Configuration
+    // High-throughput pregen configuration
     private int batchSize = 10; // Up to 200 chunks/sec
     private int progressReportThreshold = 500;
     private final long minFreeDiskSpaceBytes = 2_000_000_000L; // 2GB safety limit
@@ -73,7 +73,7 @@ public class IdleAutoPregen {
     @SubscribeEvent
     public void onServerStopping(ServerStoppingEvent event) {
         saveState();
-        HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] 💾 Progress state saved safely during server shutdown.");
+        HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] Progress state saved safely during server shutdown.");
     }
 
     @SubscribeEvent
@@ -83,7 +83,7 @@ public class IdleAutoPregen {
             saveState();
         }
         idleCooldownTicks = 100;
-        HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] ☀️ Player {} joined: Background pregen paused. 100% resources allocated to gameplay.",
+        HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] Player {} joined: background pregen paused, 100% resources allocated to gameplay.",
             event.getEntity().getName().getString());
     }
 
@@ -145,14 +145,14 @@ public class IdleAutoPregen {
         chunksGeneratedThisSession = 0;
         List<HotspotTracker.Hotspot> spots = hotspotTracker.getHotspots();
         String spotName = currentHotspotIndex < spots.size() ? spots.get(currentHotspotIndex).name : "Frontier";
-        HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] ⚡ Auto-Pregeneration RESUMED for [{}] at ring coordinate ({}, {}) [Total Chunks: {}].",
+        HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] Auto-pregeneration resumed for [{}] at ring coordinate ({}, {}) [total chunks: {}].",
             spotName, spiralX, spiralZ, chunksGeneratedTotal);
     }
 
     public void pause(String reason) {
         if (isRunning) {
             isRunning = false;
-            HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] ☀️ Instant Pause: {} (Session Chunks: {}). Saved exact frontier position ({}, {}).",
+            HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] Instant pause: {} (session chunks: {}); saved exact frontier position ({}, {}).",
                 reason, chunksGeneratedThisSession, spiralX, spiralZ);
         }
     }
@@ -199,7 +199,7 @@ public class IdleAutoPregen {
             level.getChunkSource().save(false);
             saveState();
             System.gc(); // Clean RAM safely during idle
-            HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] 🚀 RESUMABLE FRONTIER: {} session chunks pre-rendered (Total: {}) for [{}] in {} (Coord: {}, {})",
+            HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] Resumable frontier: {} session chunks pre-rendered (total: {}) for [{}] in {} (coord: {}, {})",
                 chunksGeneratedThisSession, chunksGeneratedTotal, spot.name, spot.dimension.location().getPath(), spiralX, spiralZ);
         }
     }
@@ -214,7 +214,7 @@ public class IdleAutoPregen {
             if (freeDisk > minFreeDiskSpaceBytes) {
                 // Auto-expand this hotspot by +100 chunks (+1,600 blocks) infinitely!
                 spot.expandRadius(100);
-                HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] 🌟 BOUNDARY EXPANDED: [{}] expanded to radius {} chunks ({} blocks in all directions)!",
+                HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] Boundary expanded: [{}] now radius {} chunks ({} blocks in all directions).",
                     spot.name, spot.getRadius(), spot.getRadius() * 16);
             }
             
@@ -303,7 +303,7 @@ public class IdleAutoPregen {
                 }
             }
 
-            HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] 💾 RESTORED STATE: Resuming from Hotspot #{} at coordinate ({}, {}) with {} historical chunks!",
+            HyperSpeedMod.LOGGER.info("[HyperSpeed Ultra] Restored state: resuming from hotspot #{} at coordinate ({}, {}) with {} historical chunks.",
                 currentHotspotIndex, spiralX, spiralZ, chunksGeneratedTotal);
         } catch (Exception e) {
             HyperSpeedMod.LOGGER.error("[HyperSpeed Ultra] Failed to load pregen state", e);

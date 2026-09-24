@@ -13,7 +13,7 @@ Ultra-Performance Optimization, Infinite Persistent Pregeneration & Predictive L
 - Instant Memory Purge on Join: Clears pregen heap cache immediately on player login for instant ~1-5ms MSPT.
 - Smart Persistent Resume: Remembers exact chunk coordinate & frontier ring across server restarts and player disconnects.
 - Infinite Auto-Expanding Frontier: 10,000+ blocks baseline with automatic infinite ring expansion.
-- Turbo-Boost High-Throughput Auto-Pregeneration (Up to 200 chunks/sec).
+- High-throughput auto-pregeneration (up to 200 chunks/sec).
 - Anti-Ghost-Block & Cobweb Auto-Resync Guard.
 - 100% Vanilla Survival Farm Shield.
 '''

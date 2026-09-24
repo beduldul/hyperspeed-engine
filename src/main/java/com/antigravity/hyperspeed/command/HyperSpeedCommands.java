@@ -81,7 +81,7 @@ public class HyperSpeedCommands {
         int viewDist = HyperSpeedMod.getInstance().getDistanceScaler().getCurrentViewDistance();
 
         source.sendSuccess(() -> Component.literal("§6§l========================================="), false);
-        source.sendSuccess(() -> Component.literal("§e§l⚡ HYPERSPEED ULTRA (APEX EDITION v2.0.0)"), false);
+        source.sendSuccess(() -> Component.literal("§e§lHYPERSPEED ULTRA (APEX EDITION v2.0.0)"), false);
         source.sendSuccess(() -> Component.literal("§6§l========================================="), false);
         source.sendSuccess(() -> Component.literal(String.format("§a• Server Performance: §e%.1f TPS §f| §b%.2f ms MSPT", tps, mspt)), false);
         source.sendSuccess(() -> Component.literal("§a• Adaptive View-Distance: §f" + viewDist + " Chunks (MSPT Guard Active)"), false);
@@ -100,7 +100,7 @@ public class HyperSpeedCommands {
     private static int listHotspots(CommandSourceStack source) {
         IdleAutoPregen engine = HyperSpeedMod.getInstance().getPregenEngine();
         List<HotspotTracker.Hotspot> list = engine.getHotspotTracker().getHotspots();
-        source.sendSuccess(() -> Component.literal("§6=== 📍 Registered Auto-Pregen Hotspots ==="), false);
+        source.sendSuccess(() -> Component.literal("§6=== Registered Auto-Pregen Hotspots ==="), false);
         for (HotspotTracker.Hotspot h : list) {
             source.sendSuccess(() -> Component.literal(String.format("§a• §f%s §7[%s] §e(Chunk: %d, %d | Radius: %d chunks = %d blocks)",
                 h.name, h.dimension.location().getPath(), h.chunkX, h.chunkZ, h.getRadius(), h.getRadius() * 16)), false);
@@ -119,7 +119,7 @@ public class HyperSpeedCommands {
         IdleAutoPregen engine = HyperSpeedMod.getInstance().getPregenEngine();
         engine.getHotspotTracker().addCustomHotspot(name, player.level().dimension(), pos, radius);
 
-        source.sendSuccess(() -> Component.literal(String.format("§a[HyperSpeed] ✅ Frontier Hotspot §e%s §aadded at §f(%d, %d) §ain §b%s §awith radius §f%d chunks (%d blocks)! §7(Will pre-render when offline).",
+        source.sendSuccess(() -> Component.literal(String.format("§a[HyperSpeed] Frontier Hotspot §e%s §aadded at §f(%d, %d) §ain §b%s §awith radius §f%d chunks (%d blocks)! §7(Will pre-render when offline).",
             name, pos.getX(), pos.getZ(), player.level().dimension().location().getPath(), radius, radius * 16)), false);
         return 1;
     }
@@ -128,7 +128,7 @@ public class HyperSpeedCommands {
         source.sendSuccess(() -> Component.literal("§e[HyperSpeed] Compacted and trimmed server heap memory."), false);
         source.getServer().overworld().getChunkSource().save(false);
         System.gc();
-        source.sendSuccess(() -> Component.literal("§a[HyperSpeed] ✅ Memory trim completed successfully!"), false);
+        source.sendSuccess(() -> Component.literal("§a[HyperSpeed] Memory trim completed successfully."), false);
         return 1;
     }
 }

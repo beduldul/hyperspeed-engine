@@ -33,7 +33,7 @@ public class HyperSpeedMod {
         LOGGER.info("[HyperSpeed Ultra] Stable Chunk Streamer: ACTIVE (Eliminated chunk tearing / invisible void holes)");
         LOGGER.info("[HyperSpeed Ultra] Smart Persistent Progress State: ACTIVE");
         LOGGER.info("[HyperSpeed Ultra] Infinite Auto-Expanding Frontiers: ACTIVE");
-        LOGGER.info("[HyperSpeed Ultra] Turbo Throughput Pregen: UP TO 200 CHUNKS/SEC");
+        LOGGER.info("[HyperSpeed Ultra] High-throughput pregen started: up to 200 chunks/sec");
         LOGGER.info("[HyperSpeed Ultra] Anti-Ghost-Block & Cobweb Auto-Resync: ACTIVE");
         LOGGER.info("[HyperSpeed Ultra] Vanilla Survival Farm Shield: ACTIVE");
         LOGGER.info("==================================================");
