@@ -1,7 +1,7 @@
 # HyperSpeed Engine Ultra (NeoForge 1.21.1)
 
 ![NeoForge 1.21.1](https://img.shields.io/badge/NeoForge-1.21.1-blue.svg)
-![Version](https://img.shields.io/badge/Version-2.0.0_Apex_Edition-green.svg)
+![Version](https://img.shields.io/badge/Version-2.3.2-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-orange.svg)
 
 **HyperSpeed Engine Ultra** is an advanced, high-performance optimization and chunk streaming mod built for NeoForge 1.21.1 Minecraft servers and clients.
@@ -51,6 +51,6 @@ Designed to eliminate exploration lag, chunk generation delay, rubberbanding, an
 
 ## Installation
 
-1. Download `hyperspeed-2.0.0-neoforge-1.21.1.jar` from the **[Releases](https://github.com/beduldul/hyperspeed-engine/releases)** tab.
+1. Download `hyperspeed-2.3.2-neoforge-1.21.1.jar` from the **[Releases](https://github.com/beduldul/hyperspeed-engine/releases)** tab.
 2. Place the `.jar` file into your Minecraft `.minecraft/mods` directory (client and server).
 3. Requires **NeoForge 1.21.1**.
